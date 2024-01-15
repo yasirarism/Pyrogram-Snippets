@@ -18,9 +18,7 @@ class custom(dict):
 with app:
     words = custom()
     progress = app.send_message(chat, "`processed 0 messages...`")
-    total = 0
-    for msg in app.iter_history(chat, limit):
-        total += 1
+    for total, msg in enumerate(app.iter_history(chat, limit), start=1):
         if total % 200 == 0:
             progress.edit_text(f"`processed {total} messages...`")
         if msg.text:

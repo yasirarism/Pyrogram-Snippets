@@ -13,15 +13,13 @@ app = Client("my_account")
 
 @app.on_message(filters.command("joindate") & filters.me)
 def join_date(app, message: Message):
-    members = []
-    for m in app.iter_chat_members(message.chat.id):
-        members.append(
-            (
-                m.user.first_name,
-                m.joined_date or app.get_messages(message.chat.id, 1).date,
-            )
+    members = [
+        (
+            m.user.first_name,
+            m.joined_date or app.get_messages(message.chat.id, 1).date,
         )
-
+        for m in app.iter_chat_members(message.chat.id)
+    ]
     members.sort(key=lambda member: member[1])
 
     with open("joined_date.txt", "w", encoding="utf8") as f:

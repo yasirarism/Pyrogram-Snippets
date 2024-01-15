@@ -14,7 +14,7 @@ app = Client("my_account")
 @app.on_message(filters.command("invite", ".") & filters.me)
 def resolve_invite(_, message: Message):
     link = message.command[1].split("/")[-1]
-    d = urlsafe_b64decode(link + "==")
+    d = urlsafe_b64decode(f"{link}==")
     message.edit_text(
         "Invite Link: `{}`\nAdmin: `{}`\nChat: `-100{}`\nHash: `{}`".format(
             link, *unpack(">iiq", d)
